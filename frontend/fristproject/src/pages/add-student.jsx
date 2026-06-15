@@ -15,14 +15,14 @@ function AddStudent() {
 
     // Students list state
     const [students, setStudents] = useState([]);
-    
+
     // Edit tracking state
     const [editingId, setEditingId] = useState(null);
 
     // Fetch students list from backend
     const getStudents = async () => {
         try {
-            const response = await fetch('http://localhost:5000/student');
+            const response = await fetch(`http://${window.location.hostname}:5000/student`);
             const data = await response.json();
             setStudents(data);
         } catch (error) {
@@ -37,9 +37,9 @@ function AddStudent() {
 
     // Delete student handler
     const deleteStudent = async (id) => {
-        if (window.confirm('Kya aap is student ko delete karna chahte hain?')) {
+        if (window.confirm('are you sure want to delete?')) {
             try {
-                const response = await fetch(`http://localhost:5000/student/${id}`, {
+                const response = await fetch(`http://${window.location.hostname}:5000/student/${id}`, {
                     method: 'DELETE',
                 });
                 if (response.ok) {
@@ -92,9 +92,9 @@ function AddStudent() {
 
         try {
             const isEditMode = !!editingId;
-            const url = isEditMode 
-                ? `http://localhost:5000/student/${editingId}`
-                : 'http://localhost:5000/student';
+            const url = isEditMode
+                ? `http://${window.location.hostname}:5000/student/${editingId}`
+                : `http://${window.location.hostname}:5000/student`;
             const method = isEditMode ? 'PUT' : 'POST';
 
             const response = await fetch(url, {
@@ -116,9 +116,9 @@ function AddStudent() {
                 setPhone('');
                 setCourse('');
                 setEditingId(null); // Reset edit mode
-                
+
                 // Fetch the updated list immediately without manual refresh
-                getStudents(); 
+                getStudents();
             } else {
                 setError(data.message || 'Operation failed.');
             }
@@ -131,7 +131,7 @@ function AddStudent() {
     return (
         <div className="add-student-container">
             <h1>{editingId ? 'Update Student Details' : 'Add Student'}</h1>
-            
+
             {/* Feedback messages */}
             {message && <div className="alert success">{message}</div>}
             {error && <div className="alert error">{error}</div>}

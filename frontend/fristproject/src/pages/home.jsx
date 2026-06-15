@@ -15,7 +15,7 @@ function Home() {
   // Fetch all users from the backend
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/users');
+      const response = await fetch(`http://${window.location.hostname}:5000/users`);
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
@@ -46,7 +46,7 @@ function Home() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/users', {
+      const response = await fetch(`http://${window.location.hostname}:5000/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
