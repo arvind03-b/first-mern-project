@@ -22,7 +22,7 @@ function AddStudent() {
     // Fetch students list from backend
     const getStudents = async () => {
         try {
-            const response = await fetch(`http://${window.location.hostname}:5000/student`);
+            const response = await fetch('/student');
             const data = await response.json();
             setStudents(data);
         } catch (error) {
@@ -39,7 +39,7 @@ function AddStudent() {
     const deleteStudent = async (id) => {
         if (window.confirm('are you sure want to delete?')) {
             try {
-                const response = await fetch(`http://${window.location.hostname}:5000/student/${id}`, {
+                const response = await fetch(`/student/${id}`, {
                     method: 'DELETE',
                 });
                 if (response.ok) {
@@ -93,8 +93,8 @@ function AddStudent() {
         try {
             const isEditMode = !!editingId;
             const url = isEditMode
-                ? `http://${window.location.hostname}:5000/student/${editingId}`
-                : `http://${window.location.hostname}:5000/student`;
+                ? `/student/${editingId}`
+                : `/student`;
             const method = isEditMode ? 'PUT' : 'POST';
 
             const response = await fetch(url, {
