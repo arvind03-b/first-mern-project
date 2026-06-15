@@ -5,6 +5,7 @@ import AddStudent from './pages/add-student';
 function App() {
   return (
     <div style={{ backgroundColor: '#f3f4f6', minHeight: '100vh', padding: '20px 0' }}>
+      <h1>hello dosto kase ho?</h1>
       <Home />
 
       <AddStudent />
