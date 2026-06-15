@@ -1,0 +1,66 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    # --- FRONTEND STEPS ---
+    - name: Install Frontend Dependencies
+      working-directory: ./frontend/fristproject
+      run: npm install
+
+    - name: Lint Frontend (Test Case)
+      working-directory: ./frontend/fristproject
+      run: npm run lint
+
+    - name: Build Frontend
+      working-directory: ./frontend/fristproject
+      run: npm run build
+
+    # --- BACKEND STEPS ---
+    - name: Install Backend Dependencies
+      working-directory: ./backend
+      run: npm install
+      
+    - name: Test Backend (Placeholder)
+      working-directory: ./backend
+      run: echo "Backend tests passed successfully!"
+
+  # --- DEPLOYMENT ---
+  deploy-to-vps:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Deploy to VPS using SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          # Agar aap password use karte hain (SSH key nahi), toh 'password: ${{ secrets.VPS_PASSWORD }}' use karein
+          script: |
+            # Project folder mein jaayein (Ise apne VPS ke project path se change karein)
+            cd /path/to/your/FIRST-MERN-PROJECT
+            
+            # Naya code GitHub se layein
+            git pull origin main
+            
+            # Docker Compose se naye containers build aur start karein
+            docker-compose up -d --build

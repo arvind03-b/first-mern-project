@@ -1,0 +1,147 @@
+/* Simple, beginner-friendly styling for Home page */
+
+.home-page {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: #333333;
+}
+
+/* Form Styles */
+.form-container {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-container h2 {
+  margin-top: 0;
+  color: #4f46e5;
+  font-size: 24px;
+}
+
+.description {
+  color: #666666;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.form-group input:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #3b32b9;
+}
+
+/* Alert Boxes */
+.alert {
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.alert.success {
+  background-color: #d1fae5;
+  border: 1px solid #10b981;
+  color: #065f46;
+}
+
+.alert.error {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+/* Users Table Styles */
+.users-table-container {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.users-table-container h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #333333;
+  border-bottom: 2px solid #eeeeee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.no-data {
+  text-align: center;
+  color: #777777;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid #dddddd;
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.user-table th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+  color: #4b5563;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.user-table tr:hover {
+  background-color: #f1f5f9;
+}
