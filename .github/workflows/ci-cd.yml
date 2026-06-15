@@ -55,12 +55,14 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           # Agar aap password use karte hain (SSH key nahi), toh 'password: ${{ secrets.VPS_PASSWORD }}' use karein
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            # Project folder mein jaayein (Ise apne VPS ke project path se change karein)
-            cd /path/to/your/FIRST-MERN-PROJECT
+            # Project folder mein jaayein
+            cd /home/supportstudyexpl/public_html
             
-            # Naya code GitHub se layein
-            git pull origin main
+            # Naya code GitHub se zabardasti (forcefully) layein taaki conflicts na aayen
+            git fetch --all
+            git reset --hard origin/main
             
             # Docker Compose se naye containers build aur start karein
             docker compose up -d --build
