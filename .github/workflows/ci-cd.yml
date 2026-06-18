@@ -51,15 +51,20 @@ jobs:
           script: |
             cd /home/supportstudyexpl/public_html
 
-            echo "Before Deploy:"
+            git fetch origin
+
+            echo "REMOTE:"
+            git log --oneline origin/main -1
+
+            echo "LOCAL BEFORE:"
             git log --oneline -1
 
-            git fetch origin
             git reset --hard origin/main
 
-            echo "After Deploy:"
+            echo "LOCAL AFTER:"
             git log --oneline -1
 
+            docker compose down
             docker compose up -d --build
 
             docker ps
