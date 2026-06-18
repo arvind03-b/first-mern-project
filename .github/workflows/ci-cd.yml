@@ -1,74 +1,59 @@
 name: CI/CD Pipeline
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
-build-and-test:
-runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: 20
+      - name: Install Frontend Dependencies
+        working-directory: ./frontend/fristproject
+        run: npm install
 
-  # Frontend
-  - name: Install Frontend Dependencies
-    working-directory: ./frontend/fristproject
-    run: npm install
+      - name: Build Frontend
+        working-directory: ./frontend/fristproject
+        run: npm run build
 
-  - name: Build Frontend
-    working-directory: ./frontend/fristproject
-    run: npm run build
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: npm install
 
-  # Backend
-  - name: Install Backend Dependencies
-    working-directory: ./backend
-    run: npm install
+      - name: Test Backend
+        working-directory: ./backend
+        run: echo "Backend tests passed successfully!"
 
-  - name: Test Backend
-    working-directory: ./backend
-    run: echo "Backend tests passed successfully!"
+  deploy-to-vps:
+    needs: build-and-test
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 8946
+          debug: true
 
-deploy-to-vps:
-needs: build-and-test
-runs-on: ubuntu-latest
-if: github.ref == 'refs/heads/main'
+          script: |
+            cd /home/supportstudyexpl/public_html
 
+            git fetch origin
+            git reset --hard origin/main
 
-steps:
-  - name: Deploy to VPS
-    uses: appleboy/ssh-action@v1.0.3
-    with:
-      host: ${{ secrets.VPS_HOST }}
-      username: ${{ secrets.VPS_USERNAME }}
-      key: ${{ secrets.VPS_SSH_KEY }}
-      port: 8946
-      debug: true
+            docker compose up -d --build
 
-      script: |
-       echo "START"
-
-        cd /home/supportstudyexpl/public_html
-
-        pwd
-
-        git fetch origin
-
-       git status
-
-       git reset --hard origin/main
-
-       git log --oneline -1
-
-       docker compose up -d --build
-
-       echo "END"
+            docker ps
