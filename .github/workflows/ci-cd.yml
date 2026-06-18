@@ -42,17 +42,23 @@ jobs:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
-         host: ${{ secrets.VPS_HOST }}
-         username: ${{ secrets.VPS_USERNAME }}
-         password: ${{ secrets.VPS_PASSWORD }}
-         port: 8946
-         debug: true
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: 8946
+          debug: true
 
-         script: |
+          script: |
             cd /home/supportstudyexpl/public_html
+
+            echo "Before Deploy:"
+            git log --oneline -1
 
             git fetch origin
             git reset --hard origin/main
+
+            echo "After Deploy:"
+            git log --oneline -1
 
             docker compose up -d --build
 
