@@ -55,12 +55,20 @@ steps:
       debug: true
 
       script: |
+       echo "START"
+
         cd /home/supportstudyexpl/public_html
 
-        git fetch --all
-        git reset --hard origin/main
+        pwd
 
-        docker compose down
-        docker compose up -d --build
+        git fetch origin
 
-        docker ps
+       git status
+
+       git reset --hard origin/main
+
+       git log --oneline -1
+
+       docker compose up -d --build
+
+       echo "END"
